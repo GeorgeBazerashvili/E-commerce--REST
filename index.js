@@ -25,6 +25,7 @@ app.use("/api/authentication", router); // Removed the trailing slash
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`app is listening on port ${process.env.PORT || 3000}`);
+  console.log("hello mother fucker");
 });
 
 mongoose

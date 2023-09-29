@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://eccomerce-client.vercel.app"],
+    origin: ["https://vanillatech.netlify.app"],
     methods: ["GET", "POST", "HEAD"],
   })
 );

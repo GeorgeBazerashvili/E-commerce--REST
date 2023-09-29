@@ -9,8 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://vanillatech.netlify.app",
-    methods: ["GET", "POST", "HEAD"],
+    origin: "http://localhost:5173",
   })
 );
 

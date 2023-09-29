@@ -1,39 +1,32 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const router = require("./routes/auth");
-const cookieParser = require("cookie-parser");
+const authRouter = require("./routes/auth");
+const userInfoRouter = require("./routes/userinfo");
 
 const app = express();
 
-// Configure CORS middleware
 app.use(
   cors({
-    origin: "https://eccomerce-client.vercel.app",
-    credentials: "include",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Specify the allowed HTTP methods
-    optionsSuccessStatus: 200,
+    origin: ["https://eccomerce-client.vercel.app"],
+    methods: ["GET", "POST", "HEAD"],
   })
 );
 
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Define your routes
-app.use("/api/authentication", router); // Removed the trailing slash
+app.use("/auth", authRouter);
+app.use("/info", userInfoRouter);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`app is listening on port ${process.env.PORT || 3000}`);
-  console.log("hello mother fucker");
 });
 
 mongoose
-  .connect(process.env.CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.CONNECTION_STRING)
   .then(() => {
-    console.log("connected to database...");
+    console.log("connected to the database...");
   })
   .catch((err) => console.log(err));

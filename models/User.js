@@ -45,6 +45,10 @@ const UserSchema = new mongoose.Schema({
       message: "Password must include uppercase characters",
     },
   },
+  role: {
+    type: String,
+    default: "USER",
+  },
 });
 
 UserSchema.pre("save", async function (next) {

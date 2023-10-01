@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Card = require("../models/Card");
 
 async function register_post(req, res) {
   try {
@@ -63,8 +64,20 @@ async function getInfo(req, res) {
   });
 }
 
+async function createCard(req, res) {
+  const { name, description, image, price } = req.body;
+  const card = await Card.create({
+    name,
+    description,
+    image,
+    price,
+  });
+  res.status(201).json({ message: "done", card: card });
+}
+
 module.exports = {
   register_post,
   login_post,
   getInfo,
+  createCard,
 };

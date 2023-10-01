@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const authRouter = require("./routes/auth");
 const userInfoRouter = require("./routes/userinfo");
+const Router = require("./routes/router");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authRouter);
 app.use("/info", userInfoRouter);
+app.use("/", Router);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`app is listening on port ${process.env.PORT || 3000}`);

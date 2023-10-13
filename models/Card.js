@@ -12,7 +12,7 @@ const CardSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
-    minlength: 15,
+    minlength: 7,
   },
   price: {
     type: Number,

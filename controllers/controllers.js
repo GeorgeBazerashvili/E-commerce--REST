@@ -56,23 +56,60 @@ async function login_post(req, res) {
 }
 
 async function getInfo(req, res) {
-  const currentUser = await User.findOne({ _id: req.user.ID });
+  try {
+    const currentUser = await User.findOne({ _id: req.user.ID });
 
-  return res.status(200).json({
-    message: `Welcome ${currentUser.username}`,
-    response: currentUser,
-  });
+    return res.status(200).json({
+      message: `Welcome ${currentUser.username}`,
+      response: currentUser,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 async function createCard(req, res) {
-  const { name, description, image, price } = req.body;
-  const card = await Card.create({
-    name,
-    description,
-    image,
-    price,
-  });
-  res.status(201).json({ message: "done", card: card });
+  try {
+    const { name, description, image, price } = req.body;
+    const card = await Card.create({
+      name,
+      description,
+      image,
+      price,
+    });
+    res.status(201).json({ message: "done", card: card });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: error.message });
+  }
+}
+
+async function showCards(req, res) {
+  const card = await Card.find({});
+  try {
+    res.status(200).json({ data: card });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+async function findCard(req, res) {
+  const { ID } = req.body;
+  const card = await Card.findOne({ _id: ID });
+  res.status(200).json({ card });
+}
+
+async function updateCard(req, res) {
+  const { name, description, image, price, id } = req.body;
+  const user = await User.findOne({ _id: id });
+  console.log(user);
+  user.name = name;
+  user.description = description;
+  user.price = price;
+  user.image = image;
+  user.save();
+
+  res.stats(200).json({ message: "Updated Successfully", user });
 }
 
 module.exports = {
@@ -80,4 +117,7 @@ module.exports = {
   login_post,
   getInfo,
   createCard,
+  showCards,
+  findCard,
+  updateCard,
 };

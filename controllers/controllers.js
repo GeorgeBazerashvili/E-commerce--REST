@@ -71,11 +71,12 @@ async function getInfo(req, res) {
 async function createCard(req, res) {
   try {
     const { name, description, image, price } = req.body;
+    const newPrice = price * 0.95;
     const card = await Card.create({
       name,
       description,
       image,
-      price,
+      price: newPrice,
     });
     res.status(201).json({ message: "done", card: card });
   } catch (error) {
@@ -101,15 +102,32 @@ async function findCard(req, res) {
 
 async function updateCard(req, res) {
   const { name, description, image, price, id } = req.body;
-  const user = await User.findOne({ _id: id });
-  console.log(user);
-  user.name = name;
-  user.description = description;
-  user.price = price;
-  user.image = image;
-  user.save();
+  const card = await Card.findOne({ _id: id });
+  card.name = name;
+  card.description = description;
+  card.price = price;
+  card.image = image;
+  card.save();
 
-  res.stats(200).json({ message: "Updated Successfully", user });
+  res.status(200).json({ message: "Updated Successfully", card });
+}
+
+async function deleteCard(req, res) {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const card = await Card.findOne({ _id: id });
+    if (!card) {
+      return res.status(400).json({ message: "card does not exist" });
+    }
+
+    await Card.findOneAndDelete({ _id: id }).exec();
+
+    res.status(200).json({ message: "Card deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "some issue", error: error.message });
+  }
 }
 
 module.exports = {
@@ -120,4 +138,5 @@ module.exports = {
   showCards,
   findCard,
   updateCard,
+  deleteCard,
 };

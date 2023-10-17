@@ -1,0 +1,2 @@
+FRONT: "https://vanillatech.netlify.app/"
+BACK: "https://e-commerce-rest-production.up.railway.app/"

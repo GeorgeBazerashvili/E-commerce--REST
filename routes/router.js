@@ -10,8 +10,8 @@ const {
 const verifier = require("../middlewares/Auth");
 
 router.post("/admin/createcard", verifier, createCard);
-router.get("/cards", showCards);
 router.post("/findcard", findCard);
+router.get("/cards", showCards);
 router.put("/update", verifier, updateCard);
 router.delete("/deletecard/:id", deleteCard);
 

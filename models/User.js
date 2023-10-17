@@ -49,6 +49,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "USER",
   },
+  balance: {
+    type: Number,
+    default: 1000,
+  },
 });
 
 UserSchema.pre("save", async function (next) {

@@ -11,7 +11,6 @@ const app = express();
 app.use(
   cors({
     origin: "https://vanillatech.netlify.app",
-    "Access-Control-Allow-Origin": "https://vanillatech.netlify.app",
   })
 );
 

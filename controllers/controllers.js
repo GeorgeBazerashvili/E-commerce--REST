@@ -130,6 +130,20 @@ async function deleteCard(req, res) {
   }
 }
 
+async function updateBalance(req, res) {
+  const { id } = req.params;
+  const { balance } = req.body;
+  const user = await User.findOne({ _id: id });
+  if (!user) {
+    return res.status(403).json({ message: "User not registered" });
+  }
+
+  user.balance = balance;
+  await user.save();
+
+  res.status(200).json({ messaage: "User Balance Updated!" });
+}
+
 module.exports = {
   register_post,
   login_post,
@@ -139,4 +153,5 @@ module.exports = {
   findCard,
   updateCard,
   deleteCard,
+  updateBalance,
 };
